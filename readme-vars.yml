@@ -1,0 +1,77 @@
+---
+
+# project information
+project_name: sealskin
+project_url: "https://github.com/selkies-project/sealskin/"
+project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/selkies-logo.png"
+project_blurb: "[Sealskin]({{ project_url }}) is a self-hosted, client-server platform that enables users to run powerful, containerized desktop applications streamed directly to a web browser. It uses a browser extension to intercept user actions—such as clicking a link or downloading a file and redirects them to a secure, isolated application environment running on a remote server."
+project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
+project_categories: "Remote Desktop, Business"
+# supported architectures
+available_architectures:
+  - {arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
+  - {arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
+# container parameters
+param_container_name: "{{ project_name }}"
+param_usage_include_vols: true
+param_volumes:
+  - {vol_path: "/config", vol_host_path: "/path/to/{{ project_name }}/config", desc: "All configuration files and metadata for the application."}
+  - {vol_path: "/storage", vol_host_path: "/path/to/{{ project_name }}/storage", desc: "All file storage for home directories and ephemeral mounts."}
+  - {vol_path: "/var/run/docker.sock", vol_host_path: "/var/run/docker.sock", desc: "Docker socket, required to spin up application containers."}
+param_usage_include_ports: true
+param_ports:
+  - {external_port: "8000", internal_port: "8000", port_desc: "API communication port."}
+  - {external_port: "8443", internal_port: "8443", port_desc: "App session port."}
+param_usage_include_net: true
+param_net: "bridge"
+param_net_desc: "Use default bridge network"
+# application setup block
+app_setup_block_enabled: true
+app_setup_block: |
+  This image hosts the server component for the SealSkin platform. Two ports are used to access the platform from the SealSkin browser extension 8000 the api port and 8443 for app sessions.
+
+  Download the browser extension from [HERE](https://chromewebstore.google.com/detail/sealskin-isolation/lclgfmnljgacfdpmmmjmfpdelndbbfhk) or land on port 8000 and download the zip bundled with this server and install unpacked.
+  In the options for the extension enter manual configuration and using the "admin" user fill out the endpoint for the server and the keys obtained via first run container logs or generated yourself.
+
+  ## Basic requirements
+
+  Every variable listed in the run example is required in this current version, the only backend provider to launch containers is Docker. This container is designed to work on the default bridge network for the server and launch containers into that network and proxy their internal traffic. The storage paths are required for key and storage management while their mount paths are adapted from within the container to be run on the host for launched sessions. Everyting in the stack runs as the PUID and PGID down to the container desktop sessions, it is important that the user you use has access to the `/config` and `/storage` paths. Make note of your admin private key and server public key on first container init logs you will need that to configure the browser extension and administrate the server. 
+
+  ## Key & Certificate Management
+
+  The server requires several cryptographic keys to function. You can either let the server perform an automatic setup on its first run or manually provide your own keys for more control.
+
+  ### Automatic First-Run Setup (Recommended)
+
+  This is the simplest method. On the first launch with an empty `/config` volume:
+
+  1.  An init process automatically generates the mandatory server key (`server_key.pem`) and a self-signed SSL certificate for the proxy (`proxy_key.pem`, `proxy_cert.pem`).
+  2.  The application will then detect that no administrator exists, create a default user named `admin`, and output its **private key** directly to the container logs.
+
+  Your only action is to check the logs immediately after the first startup, copy the entire private key block for the `admin` user, and save it securely. **This key will not be shown again.**
+
+  ### Manual Pre-Configuration (Advanced)
+
+  If you wish to use your own administrator key or provide a valid SSL certificate, you can place the necessary files in the `/config` volume **before** the first launch.
+
+  *   **To use a custom Admin Key:**
+      1.  Generate your own RSA keypair.
+      2.  Create a file containing only your **public key** PEM data at the following location:
+          *   **Path:** `/path/to/config/.config/sealskin/keys/admins/admin`
+      3.  The server will detect this file and skip the automatic admin creation. You will use your corresponding private key to log in from the extension.
+
+  *   **To use a custom SSL Certificate:**
+      *   Place your SSL private key and certificate file at these locations. This will override the self-signed certificate generated by the init process.
+          *   **Key Path:** `/path/to/config/ssl/proxy_key.pem`
+          *   **Cert Path:** `/path/to/config/ssl/proxy_cert.pem`
+
+  *   **To use a custom Server E2EE Key:**
+      *   Place your RSA private key at this location. This is the core key for the API's end-to-end encryption and validates the server when a user sets the servers public key when configuring the extension.
+          *   **Path:** `/path/to/config/ssl/server_key.pem`
+          *   **Generation Command:** `openssl genpkey -algorithm RSA -out /path/to/config/ssl/server_key.pem -pkeyopt rsa_keygen_bits:4096`
+      *   To obtain the corresponding public key (which is needed by the browser extension), you can extract it from your private key with this command:
+          *   **Extraction Command:** `openssl rsa -in server_key.pem -pubout`
+
+# changelog
+changelogs:
+  - {date: "31.10.25:", desc: "Initial Release."}
