@@ -5,7 +5,7 @@ project_name: docker-sealskin
 external_type: github_stable
 release_type: stable
 release_tag: latest
-ls_branch: main
+ls_branch: master
 repo_vars:
   - EXT_GIT_BRANCH = 'master'
   - EXT_USER = 'selkies-project'

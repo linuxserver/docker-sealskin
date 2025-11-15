@@ -7,31 +7,31 @@ permissions:
   contents: read
 
 jobs:
-  external-trigger-main:
+  external-trigger-master:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.1
 
       - name: External Trigger
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
         env:
           SKIP_EXTERNAL_TRIGGER: ${{ vars.SKIP_EXTERNAL_TRIGGER }}
         run: |
           printf "# External trigger for docker-sealskin\n\n" >> $GITHUB_STEP_SUMMARY
-          if grep -q "^sealskin_main_" <<< "${SKIP_EXTERNAL_TRIGGER}"; then
+          if grep -q "^sealskin_master_" <<< "${SKIP_EXTERNAL_TRIGGER}"; then
             echo "> [!NOTE]" >> $GITHUB_STEP_SUMMARY
-            echo "> Github organizational variable \`SKIP_EXTERNAL_TRIGGER\` contains \`sealskin_main_\`; will skip trigger if version matches." >> $GITHUB_STEP_SUMMARY
-          elif grep -q "^sealskin_main" <<< "${SKIP_EXTERNAL_TRIGGER}"; then
+            echo "> Github organizational variable \`SKIP_EXTERNAL_TRIGGER\` contains \`sealskin_master_\`; will skip trigger if version matches." >> $GITHUB_STEP_SUMMARY
+          elif grep -q "^sealskin_master" <<< "${SKIP_EXTERNAL_TRIGGER}"; then
             echo "> [!WARNING]" >> $GITHUB_STEP_SUMMARY
-            echo "> Github organizational variable \`SKIP_EXTERNAL_TRIGGER\` contains \`sealskin_main\`; skipping trigger." >> $GITHUB_STEP_SUMMARY
+            echo "> Github organizational variable \`SKIP_EXTERNAL_TRIGGER\` contains \`sealskin_master\`; skipping trigger." >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
           echo "> [!NOTE]" >> $GITHUB_STEP_SUMMARY
-          echo "> External trigger running off of main branch. To disable this trigger, add \`sealskin_main\` into the Github organizational variable \`SKIP_EXTERNAL_TRIGGER\`." >> $GITHUB_STEP_SUMMARY
+          echo "> External trigger running off of master branch. To disable this trigger, add \`sealskin_master\` into the Github organizational variable \`SKIP_EXTERNAL_TRIGGER\`." >> $GITHUB_STEP_SUMMARY
           printf "\n## Retrieving external version\n\n" >> $GITHUB_STEP_SUMMARY
           EXT_RELEASE=$(curl -u "${{ secrets.CR_USER }}:${{ secrets.CR_PAT }}" -sX GET "https://api.github.com/repos/selkies-project/sealskin/releases/latest" | jq -r '. | .tag_name')
           echo "Type is \`github_stable\`" >> $GITHUB_STEP_SUMMARY
-          if grep -q "^sealskin_main_${EXT_RELEASE}" <<< "${SKIP_EXTERNAL_TRIGGER}"; then
+          if grep -q "^sealskin_master_${EXT_RELEASE}" <<< "${SKIP_EXTERNAL_TRIGGER}"; then
             echo "> [!WARNING]" >> $GITHUB_STEP_SUMMARY
             echo "> Github organizational variable \`SKIP_EXTERNAL_TRIGGER\` matches current external release; skipping trigger." >> $GITHUB_STEP_SUMMARY
             exit 0
@@ -39,7 +39,7 @@ jobs:
           if [ -z "${EXT_RELEASE}" ] || [ "${EXT_RELEASE}" == "null" ]; then
             echo "> [!WARNING]" >> $GITHUB_STEP_SUMMARY
             echo "> Can't retrieve external version, exiting" >> $GITHUB_STEP_SUMMARY
-            FAILURE_REASON="Can't retrieve external version for sealskin branch main"
+            FAILURE_REASON="Can't retrieve external version for sealskin branch master"
             GHA_TRIGGER_URL="https://github.com/linuxserver/docker-sealskin/actions/runs/${{ github.run_id }}"
             curl -X POST -H "Content-Type: application/json" --data '{"avatar_url": "https://cdn.discordapp.com/avatars/354986384542662657/df91181b3f1cf0ef1592fbe18e0962d7.png","embeds": [{"color": 16711680,
               "description": "**Trigger Failed** \n**Reason:** '"${FAILURE_REASON}"' \n**Trigger URL:** '"${GHA_TRIGGER_URL}"' \n"}],
@@ -106,7 +106,7 @@ jobs:
           if [ "${EXT_RELEASE_SANITIZED}" == "${IMAGE_VERSION}" ]; then
             echo "Sanitized version \`${EXT_RELEASE_SANITIZED}\` already pushed, exiting" >> $GITHUB_STEP_SUMMARY
             exit 0
-          elif [ $(curl -s https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-sealskin/job/main/lastBuild/api/json | jq -r '.building') == "true" ]; then
+          elif [ $(curl -s https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-sealskin/job/master/lastBuild/api/json | jq -r '.building') == "true" ]; then
             echo "New version \`${EXT_RELEASE}\` found; but there already seems to be an active build on Jenkins; exiting" >> $GITHUB_STEP_SUMMARY
             exit 0
           else
@@ -124,7 +124,7 @@ jobs:
                 echo "All artifacts seem to be uploaded." >> $GITHUB_STEP_SUMMARY
               fi
               response=$(curl -iX POST \
-                https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-sealskin/job/main/buildWithParameters?PACKAGE_CHECK=false \
+                https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-sealskin/job/master/buildWithParameters?PACKAGE_CHECK=false \
                 --user ${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }} | grep -i location | sed "s|^[L|l]ocation: \(.*\)|\1|")
               echo "Jenkins [job queue url](${response%$'\r'})" >> $GITHUB_STEP_SUMMARY
               echo "Sleeping 10 seconds until job starts" >> $GITHUB_STEP_SUMMARY
