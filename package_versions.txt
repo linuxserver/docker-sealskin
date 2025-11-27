@@ -32,7 +32,7 @@ curl                                                             8.14.1-r2      
 dario.cat/mergo                                                  v1.0.1                                go-module    
 docker                                                           7.1.0                                 python       
 ecdsa                                                            0.19.1                                python       
-fastapi                                                          0.121.3                               python       
+fastapi                                                          0.122.0                               python       
 filippo.io/edwards25519                                          v1.1.0                                go-module    
 findutils                                                        4.10.0-r0                             apk          
 gdbm                                                             1.24-r0                               apk          
@@ -206,7 +206,7 @@ procps-ng                                                        4.0.4-r3       
 pyasn1                                                           0.6.1                                 python       
 pyc                                                              3.12.12-r0                            apk          
 pycparser                                                        2.23                                  python       
-pydantic                                                         2.12.4                                python       
+pydantic                                                         2.12.5                                python       
 pydantic-core                                                    2.41.5                                python       
 python-dotenv                                                    1.2.1                                 python       
 python-jose                                                      3.5.0                                 python       
