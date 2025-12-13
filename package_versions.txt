@@ -12,7 +12,7 @@ bash                                                             5.2.37-r0      
 brotli-libs                                                      1.1.0-r2                              apk          
 busybox                                                          1.37.0-r20                            apk          
 busybox-binsh                                                    1.37.0-r20                            apk          
-c-ares                                                           1.34.5-r0                             apk          
+c-ares                                                           1.34.6-r0                             apk          
 ca-certificates                                                  20250911-r0                           apk          
 ca-certificates-bundle                                           20250911-r0                           apk          
 caddy                                                            2.10.0-r4                             apk          
@@ -32,7 +32,7 @@ curl                                                             8.14.1-r2      
 dario.cat/mergo                                                  v1.0.1                                go-module    
 docker                                                           7.1.0                                 python       
 ecdsa                                                            0.19.1                                python       
-fastapi                                                          0.124.0                               python       
+fastapi                                                          0.124.4                               python       
 filippo.io/edwards25519                                          v1.1.0                                go-module    
 findutils                                                        4.10.0-r0                             apk          
 gdbm                                                             1.24-r0                               apk          
@@ -228,8 +228,8 @@ starlette                                                        0.50.0         
 stdlib                                                           go1.24.11                             go-module    
 typing-extensions                                                4.15.0                                python       
 typing-inspection                                                0.4.2                                 python       
-tzdata                                                           2025b-r0                              apk          
-urllib3                                                          2.6.0                                 python       
+tzdata                                                           2025c-r0                              apk          
+urllib3                                                          2.6.2                                 python       
 utmps-libs                                                       0.1.3.1-r0                            apk          
 uvicorn                                                          0.38.0                                python       
 uvloop                                                           0.22.1                                python       
