@@ -6,7 +6,7 @@ alpine-keys                                                      2.5-r0         
 alpine-release                                                   3.22.2-r0                             apk          
 annotated-doc                                                    0.0.4                                 python       
 annotated-types                                                  0.7.0                                 python       
-anyio                                                            4.12.0                                python       
+anyio                                                            4.12.1                                python       
 apk-tools                                                        2.14.9-r3                             apk          
 bash                                                             5.2.37-r0                             apk          
 brotli-libs                                                      1.1.0-r2                              apk          
