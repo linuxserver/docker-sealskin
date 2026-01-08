@@ -329,4 +329,5 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **08.01.26:** - Improve permission fixing.
 * **31.10.25:** - Initial Release.
