@@ -1,26 +1,24 @@
 #!/usr/bin/with-contenv bash
 
+mkdir -p /config/ssl
+
 # create self signed cert
 if [ ! -f "/config/ssl/proxy_key.pem" ]; then
-  mkdir -p /config/ssl
   openssl req -new -x509 \
     -days 3650 -nodes \
     -out /config/ssl/proxy_cert.pem \
     -keyout /config/ssl/proxy_key.pem \
     -subj "/C=US/ST=CA/L=Carlsbad/O=Linuxserver.io/OU=LSIO Server/CN=*"
   chmod 600 /config/ssl/proxy_key.pem
-  chown -R abc:abc /config/ssl
 fi
 
 # generate server key
 if [ ! -f "/config/ssl/server_key.pem" ]; then
-  mkdir -p /config/ssl
   openssl genpkey \
     -algorithm RSA \
     -out /config/ssl/server_key.pem \
     -pkeyopt rsa_keygen_bits:4096
   chmod 600 /config/ssl/server_key.pem
-  chown -R abc:abc /config/ssl
 fi
 
 # docker socket perms
@@ -45,5 +43,6 @@ if [ -S "${DOCKER_SOCK_PATH}" ]; then
 fi
 
 # perms
-chown abc:abc /sealskin.zip
-chown abc:abc /storage
+lsiown abc:abc /sealskin.zip
+lsiown abc:abc /storage
+lsiown -R abc:abc /config
