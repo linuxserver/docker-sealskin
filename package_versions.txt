@@ -15,7 +15,7 @@ busybox-binsh                                                    1.37.0-r20     
 c-ares                                                           1.34.6-r0                             apk          
 ca-certificates                                                  20250911-r0                           apk          
 ca-certificates-bundle                                           20250911-r0                           apk          
-caddy                                                            2.10.0-r4                             apk          
+caddy                                                            2.10.0-r5                             apk          
 caddy                                                            UNKNOWN                               go-module    
 catatonit                                                        0.2.1-r0                              apk          
 cel.dev/expr                                                     v0.19.1                               go-module    
@@ -203,7 +203,7 @@ nghttp2-libs                                                     1.65.0-r0      
 oniguruma                                                        6.9.10-r0                             apk          
 openssl                                                          3.5.4-r0                              apk          
 procps-ng                                                        4.0.4-r3                              apk          
-pyasn1                                                           0.6.1                                 python       
+pyasn1                                                           0.6.2                                 python       
 pyc                                                              3.12.12-r0                            apk          
 pycparser                                                        2.23                                  python       
 pydantic                                                         2.12.5                                python       
@@ -225,7 +225,7 @@ skalibs-libs                                                     2.14.4.0-r0    
 sqlite-libs                                                      3.49.2-r1                             apk          
 ssl_client                                                       1.37.0-r20                            apk          
 starlette                                                        0.50.0                                python       
-stdlib                                                           go1.24.11                             go-module    
+stdlib                                                           go1.24.12                             go-module    
 typing-extensions                                                4.15.0                                python       
 typing-inspection                                                0.4.2                                 python       
 tzdata                                                           2025c-r0                              apk          
