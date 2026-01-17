@@ -56,14 +56,25 @@ The architectures supported by this image are:
 
 ## Application Setup
 
-This image hosts the server component for the SealSkin platform. Two ports are used to access the platform from the SealSkin browser extension 8000 the api port and 8443 for app sessions.
+This image hosts the server component for the SealSkin platform.
 
-Download the browser extension from [HERE](https://chromewebstore.google.com/detail/sealskin-isolation/lclgfmnljgacfdpmmmjmfpdelndbbfhk) or land on port 8000 and download the zip bundled with this server and install unpacked.
-In the options for the extension enter manual configuration and using the "admin" user fill out the endpoint for the server and the keys obtained via first run container logs or generated yourself.
+Download the browser extension from [for Chrome HERE](https://chromewebstore.google.com/detail/sealskin-isolation/lclgfmnljgacfdpmmmjmfpdelndbbfhk), [for Firefox HERE](https://addons.mozilla.org/en-US/firefox/addon/sealskin-isolation/).
 
-## Basic requirements
+On first init a file will be created `/config/admin.json` if you set `HOST_URL` you can use this file for credentials as is, if you did not you will need to edit it and change the URL/IP set in the file to use it. Once authenticated in the extension you can generate users and new config files to distribute or use.
 
-Every variable listed in the run example is required in this current version including the container name, the only backend provider to launch containers is Docker. This container is designed to work on the default bridge network for the server and launch containers into that network and proxy their internal traffic. The storage paths are required for key and storage management while their mount paths are adapted from within the container to be run on the host for launched sessions. Everyting in the stack runs as the PUID and PGID down to the container desktop sessions, it is important that the user you use has access to the `/config` and `/storage` paths. Make note of your admin private key and server public key on first container init logs you will need that to configure the browser extension and administrate the server. 
+>[!NOTE]
+>If you are not using a legitimate ssl certificate (default self signed in `/config/ssl`) than you can only use the Chrome extension and must forward whatever port mapped to 8000 to the internet. Firefox enforces https in the extension space and Chrome allows us to fall back to E2EE over http.
+
+>[!NOTE]
+>Please remember to copy and delete the default `/config/admin.json` file from your server for security, keep it somewhere safe!
+
+## Basic Requirements
+
+It is important to use the container name `sealskin` as this is how the container identifies itself and determines its ports, volumes, and network. The only backend provider to launch containers is Docker. The storage paths are required for key and storage management while their mount paths are adapted from within the container to be run on the host for launched sessions. Everyting in the stack runs as the PUID and PGID down to the container desktop sessions, it is important that the user you use has access to the `/config` and `/storage` paths.
+
+### NVIDIA Support
+
+Nvidia support only works on 580 and up full proprietary drivers (no MIT/GPL) with `nvidia-drm.modeset=1` kernel parameter set. You must ensure the card is initialized before running a container so on headless systems run `nvidia-modprobe --modeset` from the host even with this kernel parameter set, this only needs to be run once per boot on headless systems.
 
 ## Key & Certificate Management
 
@@ -115,7 +126,6 @@ services:
   sealskin:
     image: lscr.io/linuxserver/sealskin:latest
     container_name: sealskin
-    network_mode: bridge
     environment:
       - PUID=1000
       - PGID=1000
@@ -126,8 +136,8 @@ services:
       - /path/to/sealskin/storage:/storage
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - 8000:8000
       - 8443:8443
+      - 8000:8000 #optional
     restart: unless-stopped
 ```
 
@@ -136,13 +146,12 @@ services:
 ```bash
 docker run -d \
   --name=sealskin \
-  --net=bridge \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Etc/UTC \
   -e HOST_URL=IP|subdomain.doman.com `#optional` \
-  -p 8000:8000 \
   -p 8443:8443 \
+  -p 8000:8000 `#optional` \
   -v /path/to/sealskin/config:/config \
   -v /path/to/sealskin/storage:/storage \
   -v /var/run/docker.sock:/var/run/docker.sock \
@@ -156,9 +165,8 @@ Containers are configured using parameters passed at runtime (such as those abov
 
 | Parameter | Function |
 | :----: | --- |
-| `--net=bridge` | Use default bridge network |
-| `-p 8000:8000` | API communication port. |
-| `-p 8443:8443` | App session port. |
+| `-p 8443:8443` | HTTPS Sessions and API communication port. |
+| `-p 8000` | HTTP Fallback API communication port. |
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
 | `-e TZ=Etc/UTC` | specify a timezone to use, see this [list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
@@ -329,5 +337,6 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **17.01.26:** - Update docs to remove network and port requirement, add link to Firefox add on.
 * **08.01.26:** - Improve permission fixing.
 * **31.10.25:** - Initial Release.
