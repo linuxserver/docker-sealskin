@@ -118,7 +118,7 @@ init_diagram: |
     init-custom-files -> init-services
     init-services -> svc-cron
     svc-cron -> legacy-services
-    base -> svc-sealskin
+    init-services -> svc-sealskin
     svc-sealskin -> legacy-services
   }
   Base Images: {
