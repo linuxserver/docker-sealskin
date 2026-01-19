@@ -26,7 +26,7 @@ opt_param_ports:
   - {external_port: "8000", internal_port: "8000", port_desc: "HTTP Fallback API communication port."}
 opt_param_usage_include_env: true
 opt_param_env_vars:
-  - {env_var: "HOST_URL", env_value: "IP|subdomain.doman.com", desc: "On initial setup this will be used to fill in the default admin configuration file in the `/config` directory, if unset the string HOST_URL will need to be replaced."}
+  - {env_var: "HOST_URL", env_value: "IP or subdomain.doman.com", desc: "On initial setup this will be used to fill in the default admin configuration file in the `/config` directory, if unset the string HOST_URL will need to be replaced."}
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
@@ -127,6 +127,7 @@ init_diagram: |
   "sealskin:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "19.01.26:", desc: "Fix init race condition."}
   - {date: "17.01.26:", desc: "Update docs to remove network and port requirement, add link to Firefox add on."}
   - {date: "08.01.26:", desc: "Improve permission fixing."}
   - {date: "31.10.25:", desc: "Initial Release."}
