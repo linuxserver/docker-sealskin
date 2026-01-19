@@ -127,6 +127,7 @@ init_diagram: |
   "sealskin:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "19.01.26:", desc: "Fix init race condition."}
   - {date: "17.01.26:", desc: "Update docs to remove network and port requirement, add link to Firefox add on."}
   - {date: "08.01.26:", desc: "Improve permission fixing."}
   - {date: "31.10.25:", desc: "Initial Release."}

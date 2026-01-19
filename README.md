@@ -337,6 +337,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **19.01.26:** - Fix init race condition.
 * **17.01.26:** - Update docs to remove network and port requirement, add link to Firefox add on.
 * **08.01.26:** - Improve permission fixing.
 * **31.10.25:** - Initial Release.
