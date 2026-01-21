@@ -205,7 +205,7 @@ openssl                                                          3.5.4-r0       
 procps-ng                                                        4.0.4-r3                              apk          
 pyasn1                                                           0.6.2                                 python       
 pyc                                                              3.12.12-r0                            apk          
-pycparser                                                        2.23                                  python       
+pycparser                                                        3.0                                   python       
 pydantic                                                         2.12.5                                python       
 pydantic-core                                                    2.41.5                                python       
 python-dotenv                                                    1.2.1                                 python       
