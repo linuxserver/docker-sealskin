@@ -73,6 +73,8 @@ On first init a file will be created `/config/admin.json` if you set `HOST_URL` 
 Included in this repository is a helper script to spin up sealskin with a legit certificate using Duck DNS, before using this script please navigate to [https://www.duckdns.org/](https://www.duckdns.org/), log in, make a sub domain, and get your token. 
 
 ```
+mkdir sealskin
+cd sealskin
 bash <(curl -sSL https://raw.githubusercontent.com/linuxserver/docker-sealskin/refs/heads/master/install.sh)
 ```
 
