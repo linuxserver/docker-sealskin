@@ -68,6 +68,18 @@ On first init a file will be created `/config/admin.json` if you set `HOST_URL` 
 >[!NOTE]
 >Please remember to copy and delete the default `/config/admin.json` file from your server for security, keep it somewhere safe!
 
+## Scripted installtion
+
+Included in this repository is a helper script to spin up sealskin with a legit certificate using Duck DNS, before using this script please navigate to [https://www.duckdns.org/](https://www.duckdns.org/), log in, make a sub domain, and get your token. 
+
+```
+mkdir sealskin
+cd sealskin
+bash <(curl -sSL https://raw.githubusercontent.com/linuxserver/docker-sealskin/refs/heads/master/install.sh)
+```
+
+This will setup pathing, ownership, docker config, and a legit wildcard SSL certificate for Duck DNS.
+
 ## Basic Requirements
 
 It is important to use the container name `sealskin` as this is how the container identifies itself and determines its ports, volumes, and network. The only backend provider to launch containers is Docker. The storage paths are required for key and storage management while their mount paths are adapted from within the container to be run on the host for launched sessions. Everyting in the stack runs as the PUID and PGID down to the container desktop sessions, it is important that the user you use has access to the `/config` and `/storage` paths.
