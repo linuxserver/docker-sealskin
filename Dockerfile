@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine:3.22
+FROM ghcr.io/linuxserver/baseimage-alpine:3.23
 
 # set version label
 ARG BUILD_DATE
@@ -30,7 +30,7 @@ RUN \
   fi && \
   curl -o \
     /tmp/sealskin.tar.gz -L \
-    "https://github.com/selkies-project/sealskin/archive/${SEALSKIN_VERSION}.tar.gz" && \
+    "https://github.com/selkies-project/sealskin/archive/4d3c27a1dd77e49d5f20778c072ea95795ab2498.tar.gz" && \
   tar xf \
     /tmp/sealskin.tar.gz -C \
     /opt/sealskin --strip-components=1 && \
