@@ -119,7 +119,7 @@ If you wish to use your own administrator key or provide a valid SSL certificate
 *   **To use a custom Server E2EE Key:**
     *   Place your RSA private key at this location. This is the core key for the API's end-to-end encryption and validates the server when a user sets the servers public key when configuring the extension.
         *   **Path:** `/path/to/config/ssl/server_key.pem`
-        *   **Generation Command:** `openssl genpkey -algorithm RSA -out /path/to/config/ssl/server_key.pem -pkeyopt rsa_keygen_bits:4096`
+        *   **Generation Command:** `openssl genpkey -algorithm RSA -out /path/to/config/ssl/server_key.pem -pkeyopt rsa_keygen_bits:2048`
     *   To obtain the corresponding public key (which is needed by the browser extension), you can extract it from your private key with this command:
         *   **Extraction Command:** `openssl rsa -in server_key.pem -pubout`
 
@@ -128,7 +128,7 @@ If you wish to use your own administrator key or provide a valid SSL certificate
 To help you get started creating a container from this image you can either use docker-compose or the docker cli.
 
 >[!NOTE]
->Unless a parameter is flaged as 'optional', it is *mandatory* and a value must be provided.
+>Unless a parameter is flagged as 'optional', it is *mandatory* and a value must be provided.
 
 ### docker-compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker-compose))
 
@@ -349,6 +349,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **11.02.26:** - Rebase to Alpine 3.23.
 * **19.01.26:** - Fix init race condition.
 * **17.01.26:** - Update docs to remove network and port requirement, add link to Firefox add on.
 * **08.01.26:** - Improve permission fixing.
