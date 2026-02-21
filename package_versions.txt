@@ -35,7 +35,7 @@ curl                                                             8.17.0-r1      
 dario.cat/mergo                                                  v1.0.1                                go-module    
 docker                                                           7.1.0                                 python       
 ecdsa                                                            0.19.1                                python       
-fastapi                                                          0.129.0                               python       
+fastapi                                                          0.129.1                               python       
 filippo.io/edwards25519                                          v1.1.0                                go-module    
 findutils                                                        4.10.0-r0                             apk          
 gdbm                                                             1.26-r0                               apk          
