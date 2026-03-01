@@ -84,6 +84,8 @@ This will setup pathing, ownership, docker config, and a legit wildcard SSL cert
 
 It is important to use the container name `sealskin` as this is how the container identifies itself and determines its ports, volumes, and network. The only backend provider to launch containers is Docker. The storage paths are required for key and storage management while their mount paths are adapted from within the container to be run on the host for launched sessions. Everyting in the stack runs as the PUID and PGID down to the container desktop sessions, it is important that the user you use has access to the `/config` and `/storage` paths.
 
+The entire stack is not designed to run behind a reverse proxy, but it is meant to be directly exposed to the internet.
+
 ### NVIDIA Support
 
 Nvidia support only works on 580 and up full proprietary drivers (no MIT/GPL) with `nvidia-drm.modeset=1` kernel parameter set. You must ensure the card is initialized before running a container so on headless systems run `nvidia-modprobe --modeset` from the host even with this kernel parameter set, this only needs to be run once per boot on headless systems.
