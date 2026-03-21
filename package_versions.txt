@@ -21,7 +21,7 @@ catatonit                                                        0.2.1-r0       
 cel.dev/expr                                                     v0.24.0                               go-module    
 certifi                                                          2026.2.25                             python       
 cffi                                                             2.0.0                                 python       
-charset-normalizer                                               3.4.5                                 python       
+charset-normalizer                                               3.4.6                                 python       
 click                                                            8.3.1                                 python       
 cloud.google.com/go/auth                                         v0.16.2                               go-module    
 cloud.google.com/go/auth/oauth2adapt                             v0.2.8                                go-module    
@@ -186,7 +186,7 @@ libbsd                                                           0.12.2-r0      
 libbz2                                                           1.0.8-r6                              apk          
 libcrypto3                                                       3.5.5-r0                              apk          
 libcurl                                                          8.17.0-r1                             apk          
-libexpat                                                         2.7.4-r0                              apk          
+libexpat                                                         2.7.5-r0                              apk          
 libffi                                                           3.5.2-r0                              apk          
 libgcc                                                           15.2.0-r2                             apk          
 libidn2                                                          2.3.8-r0                              apk          
@@ -210,7 +210,7 @@ nghttp3                                                          1.13.1-r0      
 oniguruma                                                        6.9.10-r0                             apk          
 openssl                                                          3.5.5-r0                              apk          
 procps-ng                                                        4.0.5-r0                              apk          
-pyasn1                                                           0.6.2                                 python       
+pyasn1                                                           0.6.3                                 python       
 pyc                                                              3.12.12-r0                            apk          
 pycparser                                                        3.0                                   python       
 pydantic                                                         2.12.5                                python       
@@ -239,7 +239,7 @@ typing-inspection                                                0.4.2          
 tzdata                                                           2026a-r0                              apk          
 urllib3                                                          2.6.3                                 python       
 utmps-libs                                                       0.1.3.1-r0                            apk          
-uvicorn                                                          0.41.0                                python       
+uvicorn                                                          0.42.0                                python       
 uvloop                                                           0.22.1                                python       
 watchfiles                                                       1.1.1                                 python       
 websockets                                                       16.0                                  python       
