@@ -54,6 +54,86 @@ echo -e "${GREEN}Docker is installed.${NC}"
 echo ""
 
 # ==========================================
+# Existing Installation / Renewal Detection
+# ==========================================
+CURRENT_DIR=$(pwd)
+DEFAULT_CERTS="$CURRENT_DIR/certs"
+
+# If docker-compose.yml and the certs/live directory exist, intercept the script
+if [ -f "$CURRENT_DIR/docker-compose.yml" ] && [ -d "$DEFAULT_CERTS/live" ]; then
+    echo -e "${BLUE}Existing installation detected in this directory.${NC}"
+
+    # Find the domain directory inside live
+    DOMAIN_DIR=$(find "$DEFAULT_CERTS/live" -mindepth 1 -maxdepth 1 -type d | head -n 1)
+
+    if [ -n "$DOMAIN_DIR" ]; then
+        DUCKDNS_DOMAIN=$(basename "$DOMAIN_DIR")
+        FULLCHAIN="$DOMAIN_DIR/fullchain.pem"
+        PRIVKEY="$DOMAIN_DIR/privkey.pem"
+
+        if [ -f "$FULLCHAIN" ]; then
+            # Extract expiration date
+            EXP_DATE=$(openssl x509 -enddate -noout -in "$FULLCHAIN" | cut -d= -f2)
+            echo -e "${CYAN}Domain: ${BOLD}$DUCKDNS_DOMAIN${NC}"
+            echo -e "${CYAN}Current Certificate Expiration Date: ${BOLD}$EXP_DATE${NC}"
+            echo ""
+
+            read -p "Do you want to renew your certificates now? [y/N]: " RENEW_CONFIRM
+            RENEW_CONFIRM=${RENEW_CONFIRM:-N}
+
+            if [[ "$RENEW_CONFIRM" =~ ^[Yy]$ ]]; then
+                echo -e "${BLUE}Renewing SSL Certificates via Certbot...${NC}"
+
+                # Run Certbot renewal
+                sudo docker run --rm -it \
+                  -v "$DEFAULT_CERTS:/etc/letsencrypt" \
+                  infinityofspace/certbot_dns_duckdns:latest \
+                    renew --force-renewal
+
+                if [ $? -eq 0 ]; then
+                    NEW_EXP_DATE=$(openssl x509 -enddate -noout -in "$FULLCHAIN" | cut -d= -f2)
+                    echo -e "${GREEN}Certificates renewed successfully.${NC}"
+                    echo -e "${CYAN}New Certificate Expiration Date: ${BOLD}$NEW_EXP_DATE${NC}"
+                    echo ""
+                    EXISTING_PUID=$(grep -oP '(?<=PUID=)[0-9]+' docker-compose.yml || id -u)
+                    EXISTING_PGID=$(grep -oP '(?<=PGID=)[0-9]+' docker-compose.yml || id -g)
+                    sudo chown -R "$EXISTING_PUID":"$EXISTING_PGID" "$DEFAULT_CERTS"
+                    echo -e "${BLUE}Staging new certificates...${NC}"
+                    # Dynamically find the config path from the existing docker-compose.yml
+                    CONFIG_PATH=$(grep ":/config" docker-compose.yml | awk -F'- ' '{print $2}' | awk -F':' '{print $1}' | tr -d ' "')
+
+                    if [ -n "$CONFIG_PATH" ] && [ -d "$CONFIG_PATH/ssl" ]; then
+                        cp "$FULLCHAIN" "$CONFIG_PATH/ssl/proxy_cert.pem"
+                        cp "$PRIVKEY" "$CONFIG_PATH/ssl/proxy_key.pem"
+                        echo -e "${GREEN}Certificates staged to $CONFIG_PATH/ssl/${NC}"
+                        echo ""
+                        echo -e "${BLUE}Restarting the Docker Compose stack to apply changes...${NC}"
+                        sudo docker compose restart
+
+                        if [ $? -eq 0 ]; then
+                            echo -e "${GREEN}Stack restarted successfully! New certificates are now live.${NC}"
+                        else
+                            echo -e "${RED}Failed to restart the stack. Please run 'sudo docker compose restart' manually.${NC}"
+                        fi
+                    else
+                        echo -e "${RED}Could not automatically determine the config path to stage certs.${NC}"
+                        echo -e "${YELLOW}Please manually copy the certs to your config/ssl folder and restart the stack.${NC}"
+                    fi
+                else
+                    echo -e "${RED}Certificate renewal failed.${NC}"
+                fi
+            else
+                echo -e "${BLUE}Skipping renewal.${NC}"
+            fi
+        fi
+    fi
+
+    echo ""
+    echo -e "${GREEN}Exiting script. (To run a fresh setup, run this script in an empty directory).${NC}"
+    exit 0
+fi
+
+# ==========================================
 # User Configuration
 # ==========================================
 
