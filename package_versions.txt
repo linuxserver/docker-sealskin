@@ -194,7 +194,7 @@ h11                                                                0.16.0       
 httpcore                                                           1.0.9                                 python       
 httptools                                                          0.7.1                                 python       
 httpx                                                              0.28.1                                python       
-idna                                                               3.11                                  python       
+idna                                                               3.12                                  python       
 jq                                                                 1.8.1-r0                              apk          
 libapk                                                             3.0.6-r0                              apk          
 libattr                                                            2.5.2-r2                              apk          
@@ -229,8 +229,8 @@ procps-ng                                                          4.0.5-r0     
 pyasn1                                                             0.6.3                                 python       
 pyc                                                                3.12.13-r0                            apk          
 pycparser                                                          3.0                                   python       
-pydantic                                                           2.13.2                                python       
-pydantic-core                                                      2.46.2                                python       
+pydantic                                                           2.13.3                                python       
+pydantic-core                                                      2.46.3                                python       
 python-dotenv                                                      1.2.2                                 python       
 python-jose                                                        3.5.0                                 python       
 python-multipart                                                   0.0.26                                python       
@@ -255,7 +255,7 @@ typing-inspection                                                  0.4.2        
 tzdata                                                             2026a-r0                              apk          
 urllib3                                                            2.6.3                                 python       
 utmps-libs                                                         0.1.3.1-r0                            apk          
-uvicorn                                                            0.44.0                                python       
+uvicorn                                                            0.45.0                                python       
 uvloop                                                             0.22.1                                python       
 watchfiles                                                         1.1.1                                 python       
 websockets                                                         16.0                                  python       
