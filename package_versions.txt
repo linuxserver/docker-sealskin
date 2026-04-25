@@ -19,10 +19,10 @@ caddy                                                              2.11.2-r1    
 caddy                                                              UNKNOWN                               go-module    
 catatonit                                                          0.2.1-r0                              apk          
 cel.dev/expr                                                       v0.25.1                               go-module    
-certifi                                                            2026.2.25                             python       
+certifi                                                            2026.4.22                             python       
 cffi                                                               2.0.0                                 python       
 charset-normalizer                                                 3.4.7                                 python       
-click                                                              8.3.2                                 python       
+click                                                              8.3.3                                 python       
 cloud.google.com/go/auth                                           v0.18.1                               go-module    
 cloud.google.com/go/auth/oauth2adapt                               v0.2.8                                go-module    
 cloud.google.com/go/compute/metadata                               v0.9.0                                go-module    
@@ -30,12 +30,12 @@ coreutils                                                          9.8-r1       
 coreutils-env                                                      9.8-r1                                apk          
 coreutils-fmt                                                      9.8-r1                                apk          
 coreutils-sha512sum                                                9.8-r1                                apk          
-cryptography                                                       46.0.7                                python       
+cryptography                                                       47.0.0                                python       
 curl                                                               8.17.0-r1                             apk          
 dario.cat/mergo                                                    v1.0.2                                go-module    
 docker                                                             7.1.0                                 python       
 ecdsa                                                              0.19.2                                python       
-fastapi                                                            0.136.0                               python       
+fastapi                                                            0.136.1                               python       
 filippo.io/bigmod                                                  v0.1.0                                go-module    
 filippo.io/edwards25519                                            v1.2.0                                go-module    
 findutils                                                          4.10.0-r0                             apk          
@@ -194,7 +194,7 @@ h11                                                                0.16.0       
 httpcore                                                           1.0.9                                 python       
 httptools                                                          0.7.1                                 python       
 httpx                                                              0.28.1                                python       
-idna                                                               3.12                                  python       
+idna                                                               3.13                                  python       
 jq                                                                 1.8.1-r0                              apk          
 libapk                                                             3.0.6-r0                              apk          
 libattr                                                            2.5.2-r2                              apk          
@@ -255,7 +255,7 @@ typing-inspection                                                  0.4.2        
 tzdata                                                             2026a-r0                              apk          
 urllib3                                                            2.6.3                                 python       
 utmps-libs                                                         0.1.3.1-r0                            apk          
-uvicorn                                                            0.45.0                                python       
+uvicorn                                                            0.46.0                                python       
 uvloop                                                             0.22.1                                python       
 watchfiles                                                         1.1.1                                 python       
 websockets                                                         16.0                                  python       
