@@ -221,7 +221,7 @@ musl                                                               1.2.5-r23    
 musl-utils                                                         1.2.5-r23                             apk          
 ncurses-terminfo-base                                              6.5_p20251123-r0                      apk          
 netcat-openbsd                                                     1.234.1-r0                            apk          
-nghttp2-libs                                                       1.68.0-r0                             apk          
+nghttp2-libs                                                       1.69.0-r0                             apk          
 nghttp3                                                            1.13.1-r0                             apk          
 oniguruma                                                          6.9.10-r0                             apk          
 openssl                                                            3.5.6-r0                              apk          
@@ -233,7 +233,7 @@ pydantic                                                           2.13.3       
 pydantic-core                                                      2.46.3                                python       
 python-dotenv                                                      1.2.2                                 python       
 python-jose                                                        3.5.0                                 python       
-python-multipart                                                   0.0.26                                python       
+python-multipart                                                   0.0.27                                python       
 python3                                                            3.12.13-r0                            apk          
 python3-pyc                                                        3.12.13-r0                            apk          
 python3-pycache-pyc0                                               3.12.13-r0                            apk          
@@ -252,13 +252,13 @@ starlette                                                          1.0.0        
 stdlib                                                             go1.25.9                              go-module    
 typing-extensions                                                  4.15.0                                python       
 typing-inspection                                                  0.4.2                                 python       
-tzdata                                                             2026a-r0                              apk          
+tzdata                                                             2026b-r0                              apk          
 urllib3                                                            2.6.3                                 python       
 utmps-libs                                                         0.1.3.1-r0                            apk          
 uvicorn                                                            0.46.0                                python       
 uvloop                                                             0.22.1                                python       
 watchfiles                                                         1.1.1                                 python       
 websockets                                                         16.0                                  python       
-xz-libs                                                            5.8.2-r0                              apk          
+xz-libs                                                            5.8.3-r0                              apk          
 zlib                                                               1.3.2-r0                              apk          
 zstd-libs                                                          1.5.7-r2                              apk          
