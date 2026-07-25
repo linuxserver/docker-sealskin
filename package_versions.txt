@@ -5,7 +5,7 @@ alpine-baselayout-data                                             3.7.2-r0     
 alpine-keys                                                        2.6-r0                                apk          
 alpine-release                                                     3.23.5-r0                             apk          
 annotated-doc                                                      0.0.4                                 python       
-annotated-types                                                    0.7.0                                 python       
+annotated-types                                                    0.8.0                                 python       
 anyio                                                              4.14.2                                python       
 apk-tools                                                          3.0.6-r0                              apk          
 bash                                                               5.3.3-r1                              apk          
@@ -19,7 +19,7 @@ caddy                                                              2.11.4-r0    
 caddy                                                              UNKNOWN                               go-module    
 catatonit                                                          0.2.1-r0                              apk          
 cel.dev/expr                                                       v0.25.1                               go-module    
-certifi                                                            2026.6.17                             python       
+certifi                                                            2026.7.22                             python       
 cffi                                                               2.1.0                                 python       
 charset-normalizer                                                 3.4.9                                 python       
 click                                                              8.4.2                                 python       
@@ -35,7 +35,7 @@ curl                                                               8.20.0-r0    
 dario.cat/mergo                                                    v1.0.2                                go-module    
 docker                                                             7.2.0                                 python       
 ecdsa                                                              0.19.2                                python       
-fastapi                                                            0.139.2                               python       
+fastapi                                                            0.140.0                               python       
 filippo.io/bigmod                                                  v0.1.0                                go-module    
 filippo.io/edwards25519                                            v1.2.0                                go-module    
 findutils                                                          4.10.0-r0                             apk          
