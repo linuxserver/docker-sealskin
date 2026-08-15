@@ -26,7 +26,7 @@ RUN \
   mkdir /opt/sealskin && \
   if [ -z ${SEALSKIN_VERSION+x} ]; then \
     SEALSKIN_VERSION=$(curl -sX GET "https://api.github.com/repos/selkies-project/sealskin/releases/latest" \
-    | awk '/tag_name/{print $4;exit}' FS='[""]'); \
+    | jq -r '.tag_name'); \
   fi && \
   curl -o \
     /tmp/sealskin.tar.gz -L \
