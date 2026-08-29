@@ -22,7 +22,7 @@ cel.dev/expr                                                       v0.25.1      
 certifi                                                            2026.7.22                             python       
 cffi                                                               2.1.1                                 python       
 charset-normalizer                                                 3.5.1                                 python       
-click                                                              8.4.2                                 python       
+click                                                              8.5.0                                 python       
 cloud.google.com/go/auth                                           v0.20.0                               go-module    
 cloud.google.com/go/auth/oauth2adapt                               v0.2.8                                go-module    
 cloud.google.com/go/compute/metadata                               v0.9.0                                go-module    
@@ -30,7 +30,7 @@ coreutils                                                          9.8-r1       
 coreutils-env                                                      9.8-r1                                apk          
 coreutils-fmt                                                      9.8-r1                                apk          
 coreutils-sha512sum                                                9.8-r1                                apk          
-cryptography                                                       50.0.0                                python       
+cryptography                                                       50.0.1                                python       
 curl                                                               8.20.0-r0                             apk          
 dario.cat/mergo                                                    v1.0.2                                go-module    
 docker                                                             7.2.0                                 python       
@@ -200,7 +200,7 @@ libapk                                                             3.0.7-r0     
 libattr                                                            2.5.2-r2                              apk          
 libbsd                                                             0.12.2-r0                             apk          
 libbz2                                                             1.0.8-r6                              apk          
-libcrypto3                                                         3.5.7-r0                              apk          
+libcrypto3                                                         3.5.8-r0                              apk          
 libcurl                                                            8.20.0-r0                             apk          
 libexpat                                                           2.8.3-r0                              apk          
 libffi                                                             3.5.2-r0                              apk          
@@ -212,7 +212,7 @@ libncursesw                                                        6.5_p20251123
 libpanelw                                                          6.5_p20251123-r0                      apk          
 libproc2                                                           4.0.5-r0                              apk          
 libpsl                                                             0.21.5-r3                             apk          
-libssl3                                                            3.5.7-r0                              apk          
+libssl3                                                            3.5.8-r0                              apk          
 libstdc++                                                          15.2.0-r2                             apk          
 libunistring                                                       1.4.1-r0                              apk          
 linux-pam                                                          1.7.1-r2                              apk          
@@ -223,13 +223,13 @@ ncurses-terminfo-base                                              6.5_p20251123
 netcat-openbsd                                                     1.234.1-r0                            apk          
 nghttp2-libs                                                       1.69.0-r0                             apk          
 oniguruma                                                          6.9.10-r0                             apk          
-openssl                                                            3.5.7-r0                              apk          
+openssl                                                            3.5.8-r0                              apk          
 procps-ng                                                          4.0.5-r0                              apk          
 pyasn1                                                             0.6.4                                 python       
 pyc                                                                3.12.14-r0                            apk          
 pycparser                                                          3.0                                   python       
-pydantic                                                           2.13.4                                python       
-pydantic-core                                                      2.46.4                                python       
+pydantic                                                           2.13.5                                python       
+pydantic-core                                                      2.46.5                                python       
 python-dotenv                                                      1.2.3                                 python       
 python-jose                                                        3.5.0                                 python       
 python-multipart                                                   0.0.32                                python       
@@ -257,7 +257,7 @@ utmps-libs                                                         0.1.3.1-r0   
 uvicorn                                                            0.52.4                                python       
 uvloop                                                             0.22.1                                python       
 watchfiles                                                         1.2.0                                 python       
-websockets                                                         17.0.1                                python       
+websockets                                                         17.1                                  python       
 xz-libs                                                            5.8.3-r0                              apk          
 zlib                                                               1.3.2-r0                              apk          
 zstd-libs                                                          1.5.7-r2                              apk          
