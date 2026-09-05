@@ -43,6 +43,5 @@ if [ -S "${DOCKER_SOCK_PATH}" ]; then
 fi
 
 # perms
-lsiown abc:abc /sealskin.zip
 lsiown abc:abc /storage
 lsiown -R abc:abc /config

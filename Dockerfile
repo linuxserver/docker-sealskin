@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine:3.23
+FROM ghcr.io/linuxserver/baseimage-alpine:3.24
 
 # set version label
 ARG BUILD_DATE
@@ -15,28 +15,22 @@ RUN \
   echo "**** install build packages ****" && \
   apk add --no-cache --upgrade --virtual=build-dependencies \
     python3-dev \
-    py3-pip \
-    zip && \
+    py3-pip && \
   echo "**** install packages ****" && \
   apk add --no-cache \
     caddy \
     openssl \
     python3 && \
   echo "**** install sealskin ****" && \
-  mkdir /opt/sealskin && \
   if [ -z ${SEALSKIN_VERSION+x} ]; then \
     SEALSKIN_VERSION=$(curl -sX GET "https://api.github.com/repos/selkies-project/sealskin/releases/latest" \
     | jq -r '.tag_name'); \
   fi && \
   curl -o \
-    /tmp/sealskin.tar.gz -L \
-    "https://github.com/selkies-project/sealskin/archive/${SEALSKIN_VERSION}.tar.gz" && \
-  tar xf \
-    /tmp/sealskin.tar.gz -C \
-    /opt/sealskin --strip-components=1 && \
-  pip3 install -r /opt/sealskin/server/requirements.txt --break-system-packages && \
-  cd /opt/sealskin/browser_extension && \
-  zip -r /sealskin.zip * && \
+    "/tmp/sealskin_server-${SEALSKIN_VERSION}-py3-none-any.whl" -L \
+    "https://github.com/selkies-project/sealskin/releases/download/${SEALSKIN_VERSION}/sealskin_server-${SEALSKIN_VERSION}-py3-none-any.whl" && \
+  pip3 install \
+    "/tmp/sealskin_server-${SEALSKIN_VERSION}-py3-none-any.whl" --break-system-packages && \
   echo "**** cleanup ****" && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   apk del --purge \
@@ -45,9 +39,9 @@ RUN \
     $HOME/.cache \
     /tmp/*
 
-# add local files
+# add local files
 COPY root/ /
 
-# ports and volumes
+# ports and volumes
 EXPOSE 8000 8443
 VOLUME /config /storage

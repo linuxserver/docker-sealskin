@@ -73,6 +73,7 @@ init_diagram: |
   "sealskin:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "05.09.26:", desc: "Install Sealskin from the upstream Python wheel, rebase to Alpine 3.24."}
   - {date: "11.02.26:", desc: "Rebase to Alpine 3.23."}
   - {date: "19.01.26:", desc: "Fix init race condition."}
   - {date: "17.01.26:", desc: "Update docs to remove network and port requirement, add link to Firefox add on."}

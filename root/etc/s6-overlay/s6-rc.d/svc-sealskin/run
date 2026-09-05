@@ -1,7 +1,5 @@
 #!/usr/bin/with-contenv bash
 
-cd /opt/sealskin/server
-
 # Run SealSkin
 exec s6-setuidgid abc \
-  python3 main.py
+  sealskin-server

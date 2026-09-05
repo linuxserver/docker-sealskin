@@ -358,6 +358,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **05.09.26:** - Install Sealskin from the upstream Python wheel, rebase to Alpine 3.24.
 * **11.02.26:** - Rebase to Alpine 3.23.
 * **19.01.26:** - Fix init race condition.
 * **17.01.26:** - Update docs to remove network and port requirement, add link to Firefox add on.
