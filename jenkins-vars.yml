@@ -7,7 +7,7 @@ release_type: stable
 release_tag: latest
 ls_branch: master
 repo_vars:
-  - EXT_GIT_BRANCH = 'master'
+  - EXT_GIT_BRANCH = 'main'
   - EXT_USER = 'selkies-project'
   - EXT_REPO = 'sealskin'
   - BUILD_VERSION_ARG = 'SEALSKIN_VERSION'
