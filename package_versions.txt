@@ -201,7 +201,7 @@ libbsd                                                             0.12.2-r0    
 libbz2                                                             1.0.8-r6                              apk          
 libcrypto3                                                         3.5.8-r0                              apk          
 libcurl                                                            8.22.0-r0                             apk          
-libexpat                                                           2.8.4-r0                              apk          
+libexpat                                                           2.8.5-r0                              apk          
 libffi                                                             3.5.2-r1                              apk          
 libgcc                                                             15.2.0-r5                             apk          
 libidn2                                                            2.3.8-r0                              apk          
@@ -243,7 +243,7 @@ shadow                                                             4.18.0-r1    
 skalibs-libs                                                       2.15.0.0-r0                           apk          
 sqlite-libs                                                        3.53.4-r0                             apk          
 ssl_client                                                         1.37.0-r31                            apk          
-starlette                                                          1.6.0                                 python       
+starlette                                                          1.7.0                                 python       
 stdlib                                                             go1.26.8                              go-module    
 typing-extensions                                                  4.16.0                                python       
 typing-inspection                                                  0.4.4                                 python       
