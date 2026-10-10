@@ -191,7 +191,7 @@ google.golang.org/protobuf                                         v1.36.11     
 gopkg.in/yaml.v3                                                   v3.0.1                                go-module    
 h11                                                                0.16.0                                python       
 httpcore                                                           1.0.9                                 python       
-httptools                                                          0.8.0                                 python       
+httptools                                                          0.9.0                                 python       
 httpx                                                              0.28.1                                python       
 idna                                                               3.20                                  python       
 jq                                                                 1.8.2-r0                              apk          
@@ -225,7 +225,7 @@ oniguruma                                                          6.9.10-r0    
 openssl                                                            3.5.9-r0                              apk          
 procps-ng                                                          4.0.6-r0                              apk          
 pyc                                                                3.14.8-r0                             apk          
-pycparser                                                          3.0                                   python       
+pycparser                                                          3.11                                  python       
 pydantic                                                           2.13.5                                python       
 pydantic-core                                                      2.46.5                                python       
 pyjwt                                                              2.13.0                                python       
@@ -247,7 +247,7 @@ starlette                                                          1.7.0        
 stdlib                                                             go1.26.8                              go-module    
 typing-extensions                                                  4.16.0                                python       
 typing-inspection                                                  0.4.4                                 python       
-tzdata                                                             2026d-r0                              apk          
+tzdata                                                             2026e-r0                              apk          
 urllib3                                                            2.8.0                                 python       
 utmps-libs                                                         0.1.3.3-r0                            apk          
 uvicorn                                                            0.52.4                                python       
@@ -255,5 +255,5 @@ uvloop                                                             0.22.1       
 watchfiles                                                         1.2.0                                 python       
 websockets                                                         17.1                                  python       
 xz-libs                                                            5.8.4-r0                              apk          
-zlib                                                               1.3.2-r0                              apk          
+zlib                                                               1.3.2-r1                              apk          
 zstd-libs                                                          1.5.7-r2                              apk          
