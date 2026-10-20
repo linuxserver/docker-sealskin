@@ -37,9 +37,9 @@ Find us at:
 [![Jenkins Build](https://img.shields.io/jenkins/build?labelColor=555555&logoColor=ffffff&style=for-the-badge&jobUrl=https%3A%2F%2Fci.linuxserver.io%2Fjob%2FDocker-Pipeline-Builders%2Fjob%2Fdocker-sealskin%2Fjob%2Fmaster%2F&logo=jenkins)](https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-sealskin/job/master/)
 [![LSIO CI](https://img.shields.io/badge/dynamic/yaml?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=CI&query=CI&url=https%3A%2F%2Fci-tests.linuxserver.io%2Flinuxserver%2Fsealskin%2Flatest%2Fci-status.yml)](https://ci-tests.linuxserver.io/linuxserver/sealskin/latest/index.html)
 
-[Sealskin](https://github.com/selkies-project/sealskin/) is a self-hosted, client-server platform that enables users to run powerful, containerized desktop applications streamed directly to a web browser. It uses a browser extension to intercept user actions—such as clicking a link or downloading a file and redirects them to a secure, isolated application environment running on a remote server.
+[Sealskin](https://github.com/selkies-project/sealskin/) is a self-hosted browser isolation and remote application streaming platform. It runs desktop applications in isolated containers on a server you control and streams them to any browser or phone. Clients include a browser extension, mobile apps, and a web app served by the server itself. Each turns links, files, downloads, and text selections into something you open remotely instead of locally, so nothing from the web runs on the device in front of you.
 
-[![sealskin](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/selkies-logo.png)](https://github.com/selkies-project/sealskin/)
+[![sealskin](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/sealskin-logo.png)](https://github.com/selkies-project/sealskin/)
 
 ## Supported Architectures
 
@@ -56,21 +56,38 @@ The architectures supported by this image are:
 
 ## Application Setup
 
-This image hosts the server component for the SealSkin platform.
+This image hosts the server component of the SealSkin platform: the API, the Caddy proxy, and the web app it serves. The full documentation lives at [selkies-project.github.io/sealskin](https://selkies-project.github.io/sealskin/).
 
-Download the browser extension from [for Chrome HERE](https://chromewebstore.google.com/detail/sealskin-isolation/lclgfmnljgacfdpmmmjmfpdelndbbfhk), [for Firefox HERE](https://addons.mozilla.org/en-US/firefox/addon/sealskin-isolation/).
+## Clients
 
-On first init a file will be created `/config/admin.json` if you set `HOST_URL` you can use this file for credentials as is, if you did not you will need to edit it and change the URL/IP set in the file to use it. Once authenticated in the extension you can generate users and new config files to distribute or use.
+| Client | Where | Notes |
+| --- | --- | --- |
+| Chrome, Edge, Brave and other Chromium browsers | [Chrome Web Store](https://chromewebstore.google.com/detail/sealskin-isolation/lclgfmnljgacfdpmmmjmfpdelndbbfhk) | Full feature set, works with the self-signed certificate. |
+| Firefox | [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/sealskin-isolation/) | Requires a trusted certificate. |
+| iOS | [App Store](https://apps.apple.com/us/app/sealskin/id6758210210) | Requires a trusted certificate. |
+| Android | [Google Play](https://play.google.com/store/apps/details?id=io.linuxserver.sealskin) | Requires a trusted certificate. |
+| Any browser | `https://<server>:8443/` | The web app: launcher, sessions, files and dashboard with nothing installed. Requires a trusted certificate. |
 
 >[!NOTE]
->If you are not using a legitimate ssl certificate (default self signed in `/config/ssl`) than you can only use the Chrome extension and must forward whatever port mapped to 8000 to the internet. Firefox enforces https in the extension space and Chrome allows us to fall back to E2EE over http.
+>If you are not using a trusted SSL certificate (the default is self signed in `/config/ssl`) then only the Chrome extension can be used, and whatever port is mapped to 8000 must also be reachable so it can fall back to E2EE over HTTP. Firefox, the mobile apps and the web app enforce HTTPS.
+
+## First run
+
+On the first start with an empty `/config` the container generates a self-signed certificate for the proxy and the server's RSA key, then the server finds no administrator and writes two credentials for the built-in `admin` account:
+
+* `/config/root_key` is an application key for the **web app**. Open `https://<server>:8443/` and paste it in to sign in.
+* `/config/admin.json` is the key file for the **browser extension and mobile apps**. If `HOST_URL` was set it can be imported as is, otherwise edit it and replace the string `HOST_URL` with your server's IP or hostname.
 
 >[!NOTE]
->Please remember to copy and delete the default `/config/admin.json` file from your server for security, keep it somewhere safe!
+>Copy both files somewhere safe and delete them from the server. They are the only copy of that private key, the server keeps just the public half.
 
-## Scripted installtion
+Once signed in you can install applications from the App Store, create users and groups, and make application keys for other devices from the dashboard.
 
-Included in this repository is a helper script to spin up sealskin with a legit certificate using Duck DNS, before using this script please navigate to [https://www.duckdns.org/](https://www.duckdns.org/), log in, make a sub domain, and get your token. 
+On the web the root key is the only sign-in the server handles itself. Everyone else signs in through an identity provider (OpenID Connect or SAML) or a reverse proxy that signs users in, whose groups make administrators and carry limits. See [Signing in](https://selkies-project.github.io/sealskin/signin) before inviting a second person. Extension and mobile users can also be given key files from the Users panel.
+
+## Scripted installation
+
+Included in this repository is a helper script to spin up SealSkin with a trusted certificate using Duck DNS. Before using this script please navigate to [https://www.duckdns.org/](https://www.duckdns.org/), log in, make a sub domain, and get your token.
 
 ```bash
 mkdir sealskin
@@ -78,9 +95,9 @@ cd sealskin
 bash <(curl -sSL https://raw.githubusercontent.com/linuxserver/docker-sealskin/refs/heads/master/install.sh)
 ```
 
-This will setup pathing, ownership, docker config, and a legit wildcard SSL certificate for Duck DNS.
+This will set up pathing, ownership, the compose file, and a trusted wildcard SSL certificate for Duck DNS.
 
-You can also renew your wildcard SSL certificate by using this same script.
+You can also renew your wildcard SSL certificate by running the same script again in the same directory.
 
 ```bash
 cd sealskin
@@ -89,48 +106,48 @@ bash <(curl -sSL https://raw.githubusercontent.com/linuxserver/docker-sealskin/r
 
 ## Basic Requirements
 
-It is important to use the container name `sealskin` as this is how the container identifies itself and determines its ports, volumes, and network. The only backend provider to launch containers is Docker. The storage paths are required for key and storage management while their mount paths are adapted from within the container to be run on the host for launched sessions. Everyting in the stack runs as the PUID and PGID down to the container desktop sessions, it is important that the user you use has access to the `/config` and `/storage` paths.
+* **The container must be named `sealskin`.** The server inspects its own container to learn the host paths behind `/config` and `/storage`, the externally mapped ports, and the Docker network. The name is also the server's identity in its own records, so a container recreated under another name is another node. If you cannot keep the name, set `hostname: sealskin` or `SEALSKIN_NODE_NAME`.
+* **The Docker socket is required.** Every session is a container the server starts through it. If launches fail with a permission error, make the socket group writable on the host with `sudo chmod g+rw /var/run/docker.sock`.
+* **`PUID` and `PGID` own everything.** The server, its files and every session container run as that user, so `/config` and `/storage` on the host must be writable by it.
+* **Ports.** 8443 carries the web app, the API and the streamed sessions. 8000 is only needed for the Chrome self-signed fallback. 8444 is the peer listener, only publish it to join several servers into a [cluster](https://selkies-project.github.io/sealskin/cluster).
 
-The entire stack is not designed to run behind a reverse proxy, but it is meant to be directly exposed to the internet.
+The server can be exposed directly to the internet, its own Caddy instance terminates TLS and authenticates every request to a session. It can also run [behind a reverse proxy](https://selkies-project.github.io/sealskin/reverse-proxy) by setting `SEALSKIN_PUBLIC_URL` and `SEALSKIN_TRUSTED_PROXIES`, plus `SEALSKIN_HTTP_PORT` for a proxy that terminates TLS, with guides for SWAG, Traefik, Nginx Proxy Manager and Caddy. Every environment variable the server reads is listed in the [Settings Reference](https://selkies-project.github.io/sealskin/settings). The same image also runs on [Kubernetes](https://selkies-project.github.io/sealskin/kubernetes) from the upstream manifest, with sessions as pods.
 
 ### NVIDIA Support
 
-Nvidia support only works on 580 and up full proprietary drivers (no MIT/GPL) with `nvidia-drm.modeset=1` kernel parameter set. You must ensure the card is initialized before running a container so on headless systems run `nvidia-modprobe --modeset` from the host even with this kernel parameter set, this only needs to be run once per boot on headless systems.
+NVIDIA support requires the proprietary driver 580 or newer (no MIT/GPL kernel modules) with the `nvidia-drm.modeset=1` kernel parameter set, and the NVIDIA Container Toolkit v1.20.1 or higher registered with Docker. The toolkit's refresh service creates the modeset device at boot so headless hosts need nothing more.
 
 ## Key & Certificate Management
 
-The server requires several cryptographic keys to function. You can either let the server perform an automatic setup on its first run or manually provide your own keys for more control.
+The server requires several cryptographic keys to function. You can either let the container perform an automatic setup on its first run or provide your own for more control.
 
 ### Automatic First-Run Setup (Recommended)
 
-This is the simplest method. On the first launch with an empty `/config` volume:
+On the first launch with an empty `/config` volume:
 
-1.  An init process automatically generates the mandatory server key (`server_key.pem`) and a self-signed SSL certificate for the proxy (`proxy_key.pem`, `proxy_cert.pem`).
-2.  The application will then detect that no administrator exists, create a default user named `admin`, and output a configuration file admin.json into the `/config/` directory.
-
-Your only action is if the `HOST_URL` environment variable is not set to replace the `HOST_URL` string in the file with your IP/URL.
+1. An init process generates the mandatory server key (`ssl/server_key.pem`) and a self-signed SSL certificate for the proxy (`ssl/proxy_key.pem`, `ssl/proxy_cert.pem`).
+2. The server detects that no administrator exists, creates the default user `admin`, and writes `/config/admin.json` and `/config/root_key` as described above.
 
 ### Manual Pre-Configuration (Advanced)
 
-If you wish to use your own administrator key or provide a valid SSL certificate, you can place the necessary files in the `/config` volume **before** the first launch.
+Place the files in the `/config` volume **before** the first launch.
 
 *   **To use a custom Admin Key:**
     1.  Generate your own RSA keypair.
-    2.  Create a file containing only your **public key** PEM data at the following location:
-        *   **Path:** `/path/to/config/.config/sealskin/keys/admins/admin`
-    3.  The server will detect this file and skip the automatic admin creation. You will use your corresponding private key to log in from the extension.
+    2.  Create a file containing only your **public key** PEM data at `/path/to/config/.config/sealskin/keys/admins/admin`.
+    3.  The server will detect this file and write no `admin.json`. You use your private key to log in from the extension, and `admin` signs in to the web app with the root key alone.
 
 *   **To use a custom SSL Certificate:**
-    *   Place your SSL private key and certificate file at these locations. This will override the self-signed certificate generated by the init process.
-        *   **Key Path:** `/path/to/config/ssl/proxy_key.pem`
-        *   **Cert Path:** `/path/to/config/ssl/proxy_cert.pem`
+    *   Place your certificate and private key at `/path/to/config/ssl/proxy_cert.pem` and `/path/to/config/ssl/proxy_key.pem`. This overrides the self-signed certificate and can be replaced later with a restart.
 
 *   **To use a custom Server E2EE Key:**
-    *   Place your RSA private key at this location. This is the core key for the API's end-to-end encryption and validates the server when a user sets the servers public key when configuring the extension.
-        *   **Path:** `/path/to/config/ssl/server_key.pem`
-        *   **Generation Command:** `openssl genpkey -algorithm RSA -out /path/to/config/ssl/server_key.pem -pkeyopt rsa_keygen_bits:2048`
-    *   To obtain the corresponding public key (which is needed by the browser extension), you can extract it from your private key with this command:
-        *   **Extraction Command:** `openssl rsa -in server_key.pem -pubout`
+    *   Place your RSA private key at `/path/to/config/ssl/server_key.pem`. This is the core key for the API's end-to-end encryption and validates the server when a client is configured with its public key.
+        *   **Generation Command:** `openssl genpkey -algorithm RSA -out /path/to/config/ssl/server_key.pem -pkeyopt rsa_keygen_bits:4096`
+        *   **Extraction Command (public key for clients):** `openssl rsa -in server_key.pem -pubout`
+
+## Upgrading from 0.3
+
+Nothing on disk needs changing, existing users, groups, installed apps, templates and sessions load as before and key files keep working. On the first start after the upgrade the server writes `/config/root_key` for the web app, sign in with it then copy and delete the file. Keep the container name `sealskin` or set `SEALSKIN_NODE_NAME` so the server keeps its identity. Collaboration rooms need application images with a Selkies release after 2.0.0, and NVIDIA hosts need the Container Toolkit v1.20.1 or higher.
 
 ## Usage
 
@@ -151,7 +168,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - "HOST_URL=IP or subdomain.doman.com" #optional
+      - "HOST_URL=IP or subdomain.domain.com" #optional
     volumes:
       - /path/to/sealskin/config:/config
       - /path/to/sealskin/storage:/storage
@@ -159,6 +176,7 @@ services:
     ports:
       - 8443:8443
       - 8000:8000 #optional
+      - 8444:8444 #optional
     restart: unless-stopped
 ```
 
@@ -170,9 +188,10 @@ docker run -d \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Etc/UTC \
-  -e HOST_URL="IP or subdomain.doman.com" `#optional` \
+  -e HOST_URL="IP or subdomain.domain.com" `#optional` \
   -p 8443:8443 \
   -p 8000:8000 `#optional` \
+  -p 8444:8444 `#optional` \
   -v /path/to/sealskin/config:/config \
   -v /path/to/sealskin/storage:/storage \
   -v /var/run/docker.sock:/var/run/docker.sock \
@@ -187,11 +206,12 @@ Containers are configured using parameters passed at runtime (such as those abov
 | Parameter | Function |
 | :----: | --- |
 | `-p 8443:8443` | HTTPS Sessions and API communication port. |
-| `-p 8000` | HTTP Fallback API communication port. |
+| `-p 8000` | HTTP fallback API port, only needed by the Chrome extension with a self-signed certificate. |
+| `-p 8444` | Peer listener, only needed to join several servers into a cluster. |
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
 | `-e TZ=Etc/UTC` | specify a timezone to use, see this [list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
-| `-e HOST_URL=IP or subdomain.doman.com` | On initial setup this will be used to fill in the default admin configuration file in the `/config` directory, if unset the string HOST_URL will need to be replaced. |
+| `-e HOST_URL=IP or subdomain.domain.com` | On initial setup this will be used to fill in the default admin configuration file in the `/config` directory, if unset the string HOST_URL will need to be replaced. |
 | `-v /config` | All configuration files and metadata for the application. |
 | `-v /storage` | All file storage for home directories and ephemeral mounts. |
 | `-v /var/run/docker.sock` | Docker socket, required to spin up application containers. |
@@ -358,6 +378,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **20.10.26:** - Update docs and installer for the 0.4.0 release: web app and root key sign in, reverse proxy support, cluster peer port.
 * **05.09.26:** - Install Sealskin from the upstream Python wheel, rebase to Alpine 3.24.
 * **11.02.26:** - Rebase to Alpine 3.23.
 * **19.01.26:** - Fix init race condition.

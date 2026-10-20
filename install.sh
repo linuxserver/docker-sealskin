@@ -157,11 +157,11 @@ DEFAULT_STORAGE="$CURRENT_DIR/storage"
 DEFAULT_CONFIG="$CURRENT_DIR/config"
 DEFAULT_CERTS="$CURRENT_DIR/certs"
 
-read -p "Enter Sealskin Storage Path [$DEFAULT_CONFIG]: " SEALSKIN_STORAGE
-SEALSKIN_STORAGE=${SEALSKIN_STORAGE:-$DEFAULT_CONFIG}
+read -p "Enter Sealskin Config Path [$DEFAULT_CONFIG]: " SEALSKIN_CONFIG
+SEALSKIN_CONFIG=${SEALSKIN_CONFIG:-$DEFAULT_CONFIG}
 
-read -p "Enter Sealskin Config/Data Path [$DEFAULT_STORAGE]: " SEALSKIN_CONFIG
-SEALSKIN_CONFIG=${SEALSKIN_CONFIG:-$DEFAULT_STORAGE}
+read -p "Enter Sealskin Storage Path [$DEFAULT_STORAGE]: " SEALSKIN_STORAGE
+SEALSKIN_STORAGE=${SEALSKIN_STORAGE:-$DEFAULT_STORAGE}
 
 read -p "Enter Certificate Storage Path [$DEFAULT_CERTS]: " CERTS_PATH
 CERTS_PATH=${CERTS_PATH:-$DEFAULT_CERTS}
@@ -265,13 +265,13 @@ sudo chown -R "$PUID":"$PGID" "$CERTS_PATH"
 echo -e "${BLUE}Staging configuration files...${NC}"
 
 # Create directories
-mkdir -p config/ssl storage
+mkdir -p "$SEALSKIN_CONFIG/ssl" "$SEALSKIN_STORAGE"
 
 # Copy certificates to the config location expected by Sealskin
 if [ -f "$FULLCHAIN" ]; then
-    cp "$FULLCHAIN" config/ssl/proxy_cert.pem
-    cp "$PRIVKEY" config/ssl/proxy_key.pem
-    echo -e "${GREEN}Certificates staged to config/ssl/${NC}"
+    cp "$FULLCHAIN" "$SEALSKIN_CONFIG/ssl/proxy_cert.pem"
+    cp "$PRIVKEY" "$SEALSKIN_CONFIG/ssl/proxy_key.pem"
+    echo -e "${GREEN}Certificates staged to $SEALSKIN_CONFIG/ssl/${NC}"
 else
     echo -e "${RED}Error: Certificates not found at $FULLCHAIN after generation step.${NC}"
     exit 1
@@ -295,8 +295,8 @@ services:
       - TZ=Etc/UTC
       - HOST_URL=sealskin.$DUCKDNS_DOMAIN
     volumes:
-      - $SEALSKIN_STORAGE:/config
-      - $SEALSKIN_CONFIG:/storage
+      - $SEALSKIN_CONFIG:/config
+      - $SEALSKIN_STORAGE:/storage
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - $PORT:8443
@@ -336,15 +336,18 @@ if [[ "$START_CONFIRM" =~ ^[Yy]$ ]]; then
         echo -e "Sealskin is now running."
         echo ""
         echo -e "${YELLOW}IMPORTANT SECURITY NOTICE:${NC}"
-        echo -e "1. Admin credentials have been generated in: ${BLUE}config/admin.json${NC}"
-        echo -e "   Please use these to log in, then ${RED}DELETE${NC} that file immediately to keep it safe."
+        echo -e "The first start writes two credentials for the built-in ${BOLD}admin${NC} account:"
+        echo -e "1. ${BLUE}$SEALSKIN_CONFIG/root_key${NC} - paste it into the web app to sign in from any browser."
+        echo -e "2. ${BLUE}$SEALSKIN_CONFIG/admin.json${NC} - import it into the browser extension or mobile app."
+        echo -e "   Copy both somewhere safe, then ${RED}DELETE${NC} them from the server."
         echo ""
         echo -e "${YELLOW}NETWORKING:${NC}"
         echo -e "Ensure you forward port ${BLUE}$PORT${NC} (TCP) on your router to this machine's IP."
         echo -e "If you are inside your home network, you may need to set up Split DNS (dnsmasq) to resolve the domain locally."
         echo ""
-        echo -e "Access your instance here:"
-        echo -e "${BLUE}https://sealskin.$DUCKDNS_DOMAIN:$PORT${NC}"
+        echo -e "Access the web app here:"
+        echo -e "${BLUE}https://sealskin.$DUCKDNS_DOMAIN:$PORT/${NC}"
+        echo -e "Documentation: ${BLUE}https://selkies-project.github.io/sealskin/${NC}"
         echo ""
     else
         echo -e "${RED}Failed to start docker compose stack.${NC}"

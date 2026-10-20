@@ -667,7 +667,7 @@ pipeline {
                 --label "org.opencontainers.image.licenses=GPL-3.0-only" \
                 --label "org.opencontainers.image.ref.name=${COMMIT_SHA}" \
                 --label "org.opencontainers.image.title=Sealskin" \
-                --label "org.opencontainers.image.description=[Sealskin](https://github.com/selkies-project/sealskin/) is a self-hosted, client-server platform that enables users to run powerful, containerized desktop applications streamed directly to a web browser. It uses a browser extension to intercept user actions—such as clicking a link or downloading a file and redirects them to a secure, isolated application environment running on a remote server." \
+                --label "org.opencontainers.image.description=[Sealskin](https://github.com/selkies-project/sealskin/) is a self-hosted browser isolation and remote application streaming platform. It runs desktop applications in isolated containers on a server you control and streams them to any browser or phone. Clients include a browser extension, mobile apps, and a web app served by the server itself. Each turns links, files, downloads, and text selections into something you open remotely instead of locally, so nothing from the web runs on the device in front of you." \
                 --no-cache --pull -t ${IMAGE}:${META_TAG} --platform=linux/amd64 \
                 --provenance=true --sbom=true --builder=container --load \
                 --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION="${VERSION_TAG}" --build-arg BUILD_DATE=${GITHUB_DATE} .
@@ -755,7 +755,7 @@ pipeline {
                     --label "org.opencontainers.image.licenses=GPL-3.0-only" \
                     --label "org.opencontainers.image.ref.name=${COMMIT_SHA}" \
                     --label "org.opencontainers.image.title=Sealskin" \
-                    --label "org.opencontainers.image.description=[Sealskin](https://github.com/selkies-project/sealskin/) is a self-hosted, client-server platform that enables users to run powerful, containerized desktop applications streamed directly to a web browser. It uses a browser extension to intercept user actions—such as clicking a link or downloading a file and redirects them to a secure, isolated application environment running on a remote server." \
+                    --label "org.opencontainers.image.description=[Sealskin](https://github.com/selkies-project/sealskin/) is a self-hosted browser isolation and remote application streaming platform. It runs desktop applications in isolated containers on a server you control and streams them to any browser or phone. Clients include a browser extension, mobile apps, and a web app served by the server itself. Each turns links, files, downloads, and text selections into something you open remotely instead of locally, so nothing from the web runs on the device in front of you." \
                     --no-cache --pull -t ${IMAGE}:amd64-${META_TAG} --platform=linux/amd64 \
                     --provenance=true --sbom=true --builder=container --load \
                     --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION="${VERSION_TAG}" --build-arg BUILD_DATE=${GITHUB_DATE} .
@@ -875,7 +875,7 @@ pipeline {
                     --label "org.opencontainers.image.licenses=GPL-3.0-only" \
                     --label "org.opencontainers.image.ref.name=${COMMIT_SHA}" \
                     --label "org.opencontainers.image.title=Sealskin" \
-                    --label "org.opencontainers.image.description=[Sealskin](https://github.com/selkies-project/sealskin/) is a self-hosted, client-server platform that enables users to run powerful, containerized desktop applications streamed directly to a web browser. It uses a browser extension to intercept user actions—such as clicking a link or downloading a file and redirects them to a secure, isolated application environment running on a remote server." \
+                    --label "org.opencontainers.image.description=[Sealskin](https://github.com/selkies-project/sealskin/) is a self-hosted browser isolation and remote application streaming platform. It runs desktop applications in isolated containers on a server you control and streams them to any browser or phone. Clients include a browser extension, mobile apps, and a web app served by the server itself. Each turns links, files, downloads, and text selections into something you open remotely instead of locally, so nothing from the web runs on the device in front of you." \
                     --no-cache --pull -f Dockerfile.aarch64 -t ${IMAGE}:arm64v8-${META_TAG} --platform=linux/arm64 \
                     --provenance=true --sbom=true --builder=container --load \
                     --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION="${VERSION_TAG}" --build-arg BUILD_DATE=${GITHUB_DATE} .
