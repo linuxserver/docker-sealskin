@@ -31,7 +31,7 @@ coreutils-env                                                      9.11-r0      
 coreutils-fmt                                                      9.11-r0                               apk          
 coreutils-sha512sum                                                9.11-r0                               apk          
 cryptography                                                       50.0.2                                python       
-curl                                                               8.22.0-r0                             apk          
+curl                                                               8.23.0-r0                             apk          
 dario.cat/mergo                                                    v1.0.2                                go-module    
 docker                                                             7.2.0                                 python       
 fastapi                                                            0.162.0                               python       
@@ -200,7 +200,7 @@ libattr                                                            2.5.2-r2     
 libbsd                                                             0.12.2-r0                             apk          
 libbz2                                                             1.0.8-r6                              apk          
 libcrypto3                                                         3.5.9-r0                              apk          
-libcurl                                                            8.22.0-r0                             apk          
+libcurl                                                            8.23.0-r0                             apk          
 libexpat                                                           2.9.0-r0                              apk          
 libffi                                                             3.5.2-r1                              apk          
 libgcc                                                             15.2.0-r5                             apk          
