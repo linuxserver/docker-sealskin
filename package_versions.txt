@@ -4,7 +4,7 @@ alpine-baselayout                                                  3.7.2-r1     
 alpine-baselayout-data                                             3.7.2-r1                              apk          
 alpine-keys                                                        2.6-r0                                apk          
 alpine-release                                                     3.24.4-r0                             apk          
-annotated-doc                                                      0.0.5                                 python       
+annotated-doc                                                      0.0.6                                 python       
 annotated-types                                                    0.8.0                                 python       
 anyio                                                              4.16.0                                python       
 apk-tools                                                          3.0.9-r0                              apk          
