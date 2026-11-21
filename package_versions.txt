@@ -20,7 +20,7 @@ caddy                                                              UNKNOWN      
 catatonit                                                          0.2.1-r0                              apk          
 cel.dev/cel-go                                                     v0.32.0                               go-module    
 cel.dev/expr                                                       v0.25.3                               go-module    
-certifi                                                            2026.10.23                            python       
+certifi                                                            2026.11.20                            python       
 cffi                                                               2.1.1                                 python       
 charset-normalizer                                                 3.5.2                                 python       
 click                                                              8.5.1                                 python       
